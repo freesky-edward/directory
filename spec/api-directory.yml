@@ -1,0 +1,75 @@
+consumes:
+- application/json
+info:
+  description: This is an API service to list all service metatdata that can be used
+    in a place it contains
+  title: The API dictory list
+  version: 0.0.1
+paths: 
+  /apis:
+    get:
+      tags:
+        - metadaservices
+      operationId: apis
+      parameters:
+      - name: keywords
+        in: query
+        type: string
+      - name: start
+        in: query
+        type: integer
+        format: int64
+      - name: length
+        in: query
+        type: integer
+        format: int64
+        default: 100
+      responses:
+        200:
+         description: List all APIs the directory has, the result contains a collection of items, each item represents an API metadata service.
+         schema:
+          $ref: "#/definitions/directory"
+definitions:
+  directory:
+    type: object
+    required:
+      - version
+    properties:
+      version:
+        type: string
+        description: the directory version of this service
+        minLength: 1
+      services:
+        type: array
+        items:
+          $ref: "#/definitions/service"
+  service:
+    type: object
+    required:
+     - name
+     - version
+     - restUrl
+    properties:
+      id:
+        type: string
+        description: the version of the specified service
+      name:
+        type: string
+        description: the name of a specified service
+        minLength: 1
+      version:
+        type: string
+        description: the version of the specified service
+      title:
+        type: string
+      restUrl:
+        type: string
+      description:
+        type: string
+      documentationLink:
+        type: string
+produces:
+- application/json
+schemes:
+- http
+swagger: "2.0"
